@@ -25,20 +25,19 @@
         <!-- 商品价格 -->
         <span class="goods-price">￥{{ price }}</span>
         <!-- 商品的数量 -->
-        <Counter :num="count" :id="id"></Counter>
+        <!-- <Counter :num="count" :id="id"></Counter> -->
+        <slot></slot>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { stringify } from "querystring";
-import { log } from "console";
-import Counter from "@/components/Counter/Counter.vue";
+// import Counter from "@/components/Counter/Counter.vue";
 export default {
-  components: {
-    Counter,
-  },
+  // components: {
+  //   Counter,
+  // },
   props: {
     id: {
       // 商品id

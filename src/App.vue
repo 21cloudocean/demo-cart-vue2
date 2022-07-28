@@ -13,7 +13,12 @@
       :state="item.goods_state"
       :count="item.goods_count"
       @state-change="getNewState"
-    ></Goods>
+    >
+      <Counter
+        :num="item.goods_count"
+        @num-change="getNewNum(item, $event)"
+      ></Counter>
+    </Goods>
 
     <!-- Footer -->
     <Footer
@@ -32,7 +37,8 @@ import axios from "axios";
 import Header from "@/components/Header/Header.vue";
 import Goods from "@/components/Goods/Goods.vue";
 import Footer from "@/components/Footer/Footer.vue";
-import bus from "@/components/eventBus.js";
+// import bus from "@/components/eventBus.js";
+import Counter from "@/components/Counter/Counter.vue";
 
 export default {
   // 注册
@@ -40,6 +46,7 @@ export default {
     Header,
     Goods,
     Footer,
+    Counter,
   },
   data() {
     return {
@@ -74,14 +81,14 @@ export default {
   created() {
     // 调用请求数据的方法
     this.initCartList();
-    bus.$on("share", (val) => {
-      this.list.some((item) => {
-        if (item.id === val.id) {
-          item.goods_count = val.value;
-          return true;
-        }
-      });
-    });
+    // bus.$on("share", (val) => {
+    //   this.list.some((item) => {
+    //     if (item.id === val.id) {
+    //       item.goods_count = val.value;
+    //       return true;
+    //     }
+    //   });
+    // });
   },
   methods: {
     // 封装请求列表数据的方法
@@ -109,6 +116,10 @@ export default {
     // 接收Footer子组件传递过来的全选按钮的状态
     getFullState(val) {
       this.list.forEach((item) => (item.goods_state = val));
+    },
+    //slot: 获取Counter组件发过来的最新的数量值
+    getNewNum(item, e) {
+      item.goods_count = e;
     },
   },
 };
